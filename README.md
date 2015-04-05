@@ -2,6 +2,8 @@ PROGRAM: mac-battery-applet.pl
 AUTHOR:  Bill Chatfield <bill_chatfield@yahoo.com>
 LICENSE: GPL 3.0
 
+![Screenshot](/docs/images/screenshot-of-gtk2-mac-battery-applet.png?raw=true "Screenshot of Gnome 3 with the Mac Battery Applet")
+
 
 DESCRIPTION
 
