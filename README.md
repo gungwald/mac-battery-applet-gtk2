@@ -4,7 +4,7 @@ LICENSE: GPL 3.0
 
 ![Screenshot](/docs/images/gtk2-battery-closeup.png?raw=true "Screenshot of Mate with fully charged battery")
 
-![Screenshot](/docs/images/gtk2-battery-closeup-blue.png?raw=true "Screenshot of Mate with the Mac Battery Applet")
+![Screenshot](/docs/images/gtk-battery-closeup-blue.png?raw=true "Screenshot of Mate with the Mac Battery Applet")
 
 DESCRIPTION
 
