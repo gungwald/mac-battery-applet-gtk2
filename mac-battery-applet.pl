@@ -280,6 +280,9 @@ sub detectDesktop
         elsif (isRunning("ksmserver")) {
             return "kde";
         }
+        elsif (isRunning("xfce4-session")) {
+            return "xfce4";
+        }
     }
     return "unknown";
 }
