@@ -34,11 +34,15 @@ use constant PMU_BATT_TYPE_SMART  => 0x00000010; # Smart battery
 use constant PMU_BATT_TYPE_HOOPER => 0x00000020; # 3400/3500 
 use constant PMU_BATT_TYPE_COMET  => 0x00000030; # 2400
 
+sub readPmuBatteryStatus;
+sub readX86BatteryStatus;
 sub readBatteryStatus;
 sub updateBatteryIcon;
 sub updateWithStdBatteryIcon;
 sub detectDesktop;
 sub isRunning($);
+
+my $cpu = `uname -m`;
 
 # Create a status icon object without specifying an icon. The icon will
 # be specified later when we decide which variant of the icon should be
@@ -76,10 +80,42 @@ Gtk2->main;
 
 # End of Main Program
 
+sub readBatteryStatus
+{
+	if ($cpu =~ /86/) {
+		return readX86BatteryStatus();
+	}
+	else {
+		return readPmuBatteryStatus();
+	}
+}
+
+sub readX86BatteryStatus
+{
+    my $batteryDir = "/sys/class/power_supply/BAT0";
+    my $chargeFile = $batteryDir . "/capacity";
+    my $statusFile = $batteryDir . "/status";
+    my $charging = 0;
+    open(CHARGE, $chargeFile) || return (0, 0, "$chargeFile: $!");
+    my $charge = <CHARGE>;
+    chomp($charge);
+    close(CHARGE);
+    open(STATUS, $statusFile) || return ($charge, 0, "$statusFile: $!");
+    my $status = <STATUS>;
+    chomp($status);
+    close(STATUS);
+    if ($status eq "Charging") {
+        $charging = 1;
+    }
+    else {
+	$charging = 0;
+    }
+    return ($charge, $charging);
+}
 
 # Reads the current battery info from /proc file system.
 # Returns the current charge as an unformatted percent value.
-sub readBatteryStatus
+sub readPmuBatteryStatus
 {
     my $batteryFile = "/proc/pmu/battery_0";
     my $charge;
